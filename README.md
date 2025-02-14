@@ -10,8 +10,8 @@
 - Codice di esempio per reti e sistemi  
 
 **Tecnologie utilizzate:**  
-- **Linguaggi**: Java, Python, C (a seconda degli argomenti trattati)  
-- **Strumenti**: Git, VirtualBox, Wireshark, Docker, ecc.  
+- **Argomenti trattati (linguaggi)**: shell
+- **Strumenti**: Git, VMWare, ambiente Linux  
 
 **Struttura del repository:**  
 ```
