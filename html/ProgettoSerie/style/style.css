@@ -1,0 +1,14 @@
+body {
+    margin: 0px;
+    display: grid;
+    grid-template-rows: 7rem 3rem auto 2rem;
+    height: 100vh;
+}
+
+header {
+    text-align: center;
+}
+
+img.logo {
+    height: 7rem;
+}
