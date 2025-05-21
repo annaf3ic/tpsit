@@ -3,8 +3,9 @@
     align-self: flex-start;
     top: 32vh;
     box-sizing: border-box;
-    width: 420px;
+    max-width: 40%;
     background-color: white;
+    min-width: 0;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -12,7 +13,6 @@
     width: 100%;
     height: 80%;
     object-fit: contain;
-    display: block;
 }
 
 .prodotto {
@@ -22,10 +22,10 @@
 .container-descrizione {
     display: flex;
     gap: 40px;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    align-content: center;
 }
 
 .dettagli-prodotto {
-    flex: 1;
+    flex: 2;
+    max-width: 100%;
 }
