@@ -1,9 +1,0 @@
-sezioni:
-    - home: presentazione
-    - categorie: elenco di tipi di prodotto
-        - prodotto: una pagina per prodotto
-    - offerte: i prodotti scontati o gli annunci di offerta
-    - modulistica: elenco dei moduli per gli ordini
-
-
-privacy policy nel footer
