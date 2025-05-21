@@ -1,46 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="style/style.css">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style/offerte.css">
+    <meta charset="UTF-8">
+    <title>Offerte Speciali - Grimilde</title>
 </head>
 <body>
     <header>
-        <div class="nome">
-            <h1>Intestazione</h1>
-        </div>
-        
-        <div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="categorie.html">Categorie</a></li>
-                    <li><a href="offerte.html">Offerte</a></li>
-                    <li><a href="modulistica.html">Modulistica</a></li>
-                </ul>
-            </nav>
-        </div>
+        <div class="logo">
+            <img src="images/logo.jpg">
+        </div>   
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="categorie.html">Categorie</a></li>
+                <li><a href="offerte.html">Offerte</a></li>
+                <li><a href="modulistica.html">Modulistica</a></li>
+            </ul>
+        </nav>
     </header>
-
+    
     <main>
         <section class="offerte">
-            <div class="anteprima">
-                <a href="prodotti/prodotto1.html">
-                    <img src="immagini/img1.png" alt="">
-                    <div class="caption"><p>Nome e descrizione breve</p></div>
-                </a>
+            <h1>Offerte speciali</h1>
+            <p class="intro">Scopri le nostre promozioni magiche! Per ogni acquisto con questi codici sconto, riceverai un regalo esclusivo o uno sconto speciale. Inserisci il codice nell'apposito spazio quando compili il modulo d'ordine postale.</p>
+            
+            <div class="offerta-banner">
+                <div class="offerta-header">
+                    <h2>Coppia di Pozioni</h2>
+                    <span class="codice">CODICE: 2POZ</span>
+                </div>
+                <div class="offerta-content">
+                    <img src="images/filtrodamore.png" alt="Pozioni Gemelle">
+                    <div class="offerta-descrizione">
+                        <p>Acquista due pozioni (anche diverse) e la seconda è al 50%!</p>
+                        <ul>
+                            <li>Valido su tutte le pozioni</li>
+                            <li>Lo sconto viene applicato sulla pozione di prezzo inferiore</li>
+                            <li>Valido fino al 30/06/2025</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="anteprima">
-                <a href="prodotti/prodotto2.html">
-                    <img src="immagini/img2.png" alt="">
-                    <div class="caption"><p>Nome e descrizione breve</p></div>
-                </a>
+
+            <div class="grid-offerte">                
+                <div class="offerta-card">
+                    <div class="offerta-header">
+                        <h2>Kit magico</h2>
+                        <span class="codice">CODICE: KIT3</span>
+                    </div>
+                    <div class="offerta-content">
+                        <img src="images/tediagamotto.png" alt="Pacco Novizio">
+                        <div class="offerta-descrizione">
+                            <p>Il kit perfetto per chi inizia nel mondo della magia! Sconto del 20% sull'acquisto di 3 prodotti di categorie diverse.</p>
+                            <ul>
+                                <li>Include una guida alle erbe magiche in omaggio</li>
+                                <li>Spedizione gratuita</li>
+                                <li>Valido per il primo acquisto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="offerta-card">
+                    <div class="offerta-header">
+                        <h2>Compleanno Magico</h2>
+                        <span class="codice">CODICE: HB2025</span>
+                    </div>
+                    <div class="offerta-content">
+                        <img src="images/bava.png" alt="Compleanno Magico">
+                        <div class="offerta-descrizione">
+                            <p>Regalati un dono magico per il tuo compleanno! 15% di sconto e un piccolo regalo sorpresa.</p>
+                            <ul>
+                                <li>Valido nel mese del tuo compleanno</li>
+                                <li>Presenta un documento d'identità con la data di nascita</li>
+                                <li>Regalo sorpresa incluso</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="anteprima">
-                <a href="prodotti/prodotto3.html">
-                    <img src="immagini/img3.png" alt="">
-                    <div class="caption"><p>Nome e descrizione breve</p></div>
-                </a>
+
+            <div class="offerta-banner">
+                    <div class="offerta-header">
+                        <h2>Ordine Mensile</h2>
+                        <span class="codice">CODICE: ABBONA</span>
+                    </div>
+                    <div class="offerta-content">
+                        <div class="offerta-descrizione">
+                            <p>Diventa un abbonato e ricevi ogni mese una pozione a sorpresa con il 25% di sconto!</p>
+                            <ul>
+                                <li>Impegnativo per 3 mesi</li>
+                                <li>Pozioni selezionate dalla strega Grimilde</li>
+                                <li>Spedizione gratuita</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            
+            <div class="note">
+                <h3>Come utilizzare i codici sconto</h3>
+                <ol>
+                    <li>Scegli l'offerta che preferisci tra quelle disponibili</li>
+                    <li>Compila il modulo d'ordine nella sezione <a href="modulistica.html">Modulistica</a></li>
+                    <li>Inserisci il codice nell'apposito spazio</li>
+                    <li>Invia il modulo via posta come indicato</li>
+                    <li>Riceverai una conferma via email con i dettagli dell'ordine</li>
+                </ol>
+                <p class="avviso">* Le offerte non sono cumulabili tra loro. Ogni codice può essere utilizzato una sola volta per cliente (tranne dove diversamente specificato).</p>
             </div>
         </section>
     </main>
@@ -54,5 +121,4 @@
         <a href="privacy.html">Privacy Policy</a> | <a href="cookie.html">Cookie Policy</a>
     </footer>
 </body>
-
 </html>

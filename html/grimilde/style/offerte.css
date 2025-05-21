@@ -1,0 +1,103 @@
+.offerte {
+    margin: 2%;
+}
+
+.grid-offerte {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 50px;
+    justify-content: center;
+}
+
+.offerta-card {
+    flex: 1 1 400px;
+    max-width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.offerta-card:hover {
+    transform: translateY(-5px);
+    opacity: 0.9;
+}
+
+.offerta-card .offerta-header {
+    background-color: #2b0d39;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offerta-header h2 {
+    margin: 0;
+    font-size: 1.3em;
+}
+
+.offerta-card .codice {
+    background-color: #2b9175;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.offerta-content {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.offerta-content img {
+    width: 30%;
+    max-height: 180px;
+    object-fit: contain;
+}
+
+.offerta-descrizione {
+    flex: 1;
+}
+
+.offerta-descrizione ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.note {
+    background-color: #f8f5f2;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.offerta-banner {
+    max-width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin: 30px 0;
+}
+
+.offerta-banner:hover {
+    transform: translateY(-5px);
+    opacity: 0.9;
+}
+
+.offerta-banner .offerta-header {
+    background-color: #3f5745;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offerta-banner .codice {
+    background-color: #9b7b49;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
