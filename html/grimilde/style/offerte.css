@@ -101,3 +101,7 @@
     font-weight: bold;
     font-size: 0.9em;
 }
+
+h2 {
+    border-bottom: none !important;
+}

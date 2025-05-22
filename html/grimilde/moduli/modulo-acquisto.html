@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Modulo di Acquisto</title>
+  <style>
+        h1 {text-align: center;}
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        fieldset { max-width: 900px; margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; }
+        legend { font-weight: bold; }
+        label { display: block; margin-top: 10px; }
+        input, select, textarea { display: block; width: 97%; padding: 8px; margin-top: 5px; resize: none; }
+        .prodotto-wrapper { display: flex; margin: 10px 0; gap: 20px}
+        .prodotto-wrapper input { width: 80px; }
+        table.invisibile { border-collapse: collapse; }
+        table.invisibile td { border: none; padding: 8px 10px; }
+        table.invisibile input[type="number"] { width: 60px; }
+  </style>
+</head>
+<body>
+
+  <h1>Grimilde The Witch: Modulo di Acquisto</h1>
+    <fieldset>
+        <legend>Dati Utente</legend>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="cognome">Cognome:</label>
+        <input type="text" id="cognome" name="cognome" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="telefono">Telefono:</label>
+        <input type="tel" id="telefono" name="telefono">
+
+        <label for="indirizzo">Indirizzo di spedizione:</label>
+        <textarea id="indirizzo" name="indirizzo" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset class="prodotti">
+        <legend>Prodotti</legend>
+        <p>Inserisci la quantità di articoli che vuoi acquistare per ogni prodotto.</p>
+      
+        <table class="invisibile">
+        <tr>
+            <td><label for="te">Tè di agamotto</label></td>
+            <td><input type="number"></td>
+        </tr>
+        <tr>
+            <td><label for="te">Filtro d'amore</label></td>
+            <td><input type="number"></td>
+        </tr>
+        <tr>
+            <td><label for="te">Pozione di sonno eterno</label></td>
+            <td><input type="number"></td>
+        </tr>
+        <tr>
+            <td><label for="te">Bava di slime</label></td>
+            <td><input type="number"></td>
+        </tr>
+        </table>
+    </fieldset>
+
+    <fieldset>
+        <legend>Codice Sconto</legend>
+        <label for="codice_sconto">Inserisci codice sconto (opzionale):</label>
+        <input type="text" id="codice_sconto" name="codice_sconto">
+    </fieldset>
+
+</body>
+</html>
