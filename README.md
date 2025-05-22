@@ -10,13 +10,5 @@
 - Codice di esempio per reti e sistemi  
 
 **Tecnologie utilizzate:**  
-- **Argomenti trattati (linguaggi)**: shell
-- **Strumenti**: Git, VMWare, ambiente Linux  
-
-**Struttura del repository:**  
-```
-tpsit  
- ├── appunti/
- ├── esercizi/
- ├── README.md 
-```
+- **Argomenti trattati (linguaggi)**: Shell, HTML, CSS
+- **Strumenti**: Git, VMWare, ambiente Linux, HTML, CSS
