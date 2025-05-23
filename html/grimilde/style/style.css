@@ -84,7 +84,7 @@ footer {
     text-align: center;
 }
 
-p, ul {
+p, ul, .p {
     line-height: 1.5;
 }
 
@@ -122,4 +122,8 @@ hr {
 
 .metodo h3 {
     margin-bottom: 0;
+}
+
+.p {
+    font-size: 1rem;
 }
