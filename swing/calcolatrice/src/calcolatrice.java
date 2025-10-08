@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Random;
 
 public class Calcolatrice extends JFrame {
     private String buttonClicked;
@@ -8,6 +9,53 @@ public class Calcolatrice extends JFrame {
         initComponents();
         
         JPanel panel = new JPanel();
+    }
+    
+    public void eListener() {
+        ActionListener listener = e -> {
+            String comando = ((JButton)e.getSource()).getText();
+            
+            int a = 0;
+            int b = 0;
+
+            String espressione;
+            text.setText(comando);
+            
+            switch (comando) {
+                case "+":
+                    a = a + b;
+                    espressione += " + " + b;
+                    espressioneF.setText(espressione);
+                    b = 0;
+                case "-":
+                    a = a - b;
+                    b = 0;
+                case "×":
+                    a = a * b;
+                    b = 0;
+                case "÷":
+                    a = a / b;
+                    b = 0;
+                case "=":
+                    text.setText(String.valueOf(a));
+                case "C":
+                    a = 0;
+                    b = 0;
+                    text.setText("");
+                    espressione = "";
+                    espressioneF.setText(espressione);
+                default:
+                    if (a == 0) {
+                        a = Integer.parseInt(comando);
+                        espressione += a;
+                        espressioneF.setText(espressione);
+                    } else if (b == 0) {
+                        b = Integer.parseInt(comando);
+                        espressione += b;
+                        espressioneF.setText(espressione);
+                    }
+            }
+        };
         
         String[] buttonLabels = {
                 "7", "8", "9", "÷",
@@ -18,55 +66,9 @@ public class Calcolatrice extends JFrame {
         
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
-            button.addActionListener(new Listener());
+            button.addActionListener(listener);
             panel.add(button);
         }
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-        JButton actionSource = (JButton) e.getSource();
-        int primoNumero;
-        int secondoNumero;
-        int risultato;
-        
-        switch (actionSource) {
-            case resultButton:
-                secondoNumero = Integer.parseInt(text.getText());
-                switch (operazione) {
-                    case plusButton:
-                        risultato = primoNumero + secondoNumero;
-                        break;
-                    case minusButton:
-                        risultato = primoNumero - secondoNumero;
-                        break;
-                    case forButton:
-                        risultato = primoNumero * secondoNumero;
-                        break;
-                    case divideButton:
-                        if (secondoNumero == 0) {
-                            text.setText("Error: Divided by zero");
-                            break;
-                        } else {
-                            risultato = primoNumero / secondoNumero;
-                        }
-                        break;
-                }
-                text.setText(String.valueOf(risultato));
-                break;
-            case plusButton:
-            case minusButton:
-            case forButton:
-            case divideButton:
-                primoNumero = Integer.parseInt(text.getText());
-                operazione = 
-                
-            default:
-                text.setText(text.getText() + actionSource);
-                break;
-        }
-        
-        
-        text.setText(buttonClicked);
     }
 
     @SuppressWarnings("unchecked")
@@ -90,11 +92,14 @@ public class Calcolatrice extends JFrame {
         btn6 = new javax.swing.JButton();
         cleanButton = new javax.swing.JButton();
         text = new javax.swing.JTextField();
+        espressioneF = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btn3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn3.setText("3");
 
+        btn0.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn0.setText("0");
         btn0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,12 +107,16 @@ public class Calcolatrice extends JFrame {
             }
         });
 
+        btn2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn2.setText("2");
 
+        btn5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn5.setText("5");
 
+        btn8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn8.setText("8");
 
+        btn7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn7.setText("7");
         btn7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,8 +124,10 @@ public class Calcolatrice extends JFrame {
             }
         });
 
+        btn4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn4.setText("4");
 
+        btn1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn1.setText("1");
         btn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +135,7 @@ public class Calcolatrice extends JFrame {
             }
         });
 
+        resultButton.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         resultButton.setText("=");
         resultButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +143,7 @@ public class Calcolatrice extends JFrame {
             }
         });
 
+        plusButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         plusButton.setText("+");
         plusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,8 +151,10 @@ public class Calcolatrice extends JFrame {
             }
         });
 
+        minusButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         minusButton.setText("-");
 
+        forButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         forButton.setText("×");
         forButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,6 +162,7 @@ public class Calcolatrice extends JFrame {
             }
         });
 
+        divideButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         divideButton.setText("÷");
         divideButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,16 +170,25 @@ public class Calcolatrice extends JFrame {
             }
         });
 
+        btn9.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn9.setText("9");
 
+        btn6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn6.setText("6");
 
+        cleanButton.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         cleanButton.setText("C");
         cleanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cleanButtonActionPerformed(evt);
             }
         });
+
+        text.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        text.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        espressioneF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        espressioneF.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,6 +197,7 @@ public class Calcolatrice extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(espressioneF)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,7 +240,9 @@ public class Calcolatrice extends JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(espressioneF, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
@@ -286,12 +314,7 @@ public class Calcolatrice extends JFrame {
 
     
     public static void main(String args[]) {
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Calcolatrice().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new Calcolatrice().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -307,14 +330,11 @@ public class Calcolatrice extends JFrame {
     private javax.swing.JButton btn9;
     private javax.swing.JButton cleanButton;
     private javax.swing.JButton divideButton;
+    private javax.swing.JTextField espressioneF;
     private javax.swing.JButton forButton;
     private javax.swing.JButton minusButton;
     private javax.swing.JButton plusButton;
     private javax.swing.JButton resultButton;
     private javax.swing.JTextField text;
     // End of variables declaration//GEN-END:variables
-}
-
-class Listener implements ActionListener {
-    
 }
