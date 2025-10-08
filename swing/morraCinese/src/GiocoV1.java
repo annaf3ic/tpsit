@@ -1,7 +1,6 @@
 import java.awt.event.ActionListener;
 import java.util.Random;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 public class GiocoV1 extends javax.swing.JFrame {
     
