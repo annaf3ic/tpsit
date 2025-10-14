@@ -1,73 +1,65 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Random;
 
 public class Calcolatrice extends JFrame {
-    private String buttonClicked;
-
+    private double a = 0;
+    private double b = 0;
+    private String operatore = "";
+    private boolean nuovaOperazione = true;
+    private String espressione = "";
+    
     public Calcolatrice() {
         initComponents();
-        
-        JPanel panel = new JPanel();
+        eListener();
     }
     
     public void eListener() {
         ActionListener listener = e -> {
             String comando = ((JButton)e.getSource()).getText();
-            
-            int a = 0;
-            int b = 0;
+            System.out.println(comando);
 
-            String espressione;
-            text.setText(comando);
-            
-            switch (comando) {
-                case "+":
-                    a = a + b;
-                    espressione += " + " + b;
-                    espressioneF.setText(espressione);
-                    b = 0;
-                case "-":
-                    a = a - b;
-                    b = 0;
-                case "×":
-                    a = a * b;
-                    b = 0;
-                case "÷":
-                    a = a / b;
-                    b = 0;
-                case "=":
-                    text.setText(String.valueOf(a));
-                case "C":
-                    a = 0;
-                    b = 0;
-                    text.setText("");
-                    espressione = "";
-                    espressioneF.setText(espressione);
-                default:
-                    if (a == 0) {
-                        a = Integer.parseInt(comando);
-                        espressione += a;
-                        espressioneF.setText(espressione);
-                    } else if (b == 0) {
-                        b = Integer.parseInt(comando);
-                        espressione += b;
-                        espressioneF.setText(espressione);
-                    }
+            if ("+-×÷".contains(comando)) {
+                a = Integer.parseInt(text.getText());
+                operatore = comando;
+                espressione = a + " " + operatore;
+                espressioneF.setText(espressione);
+                nuovaOperazione = true;
+            } else if (comando.equals("=")) {
+                b = Integer.parseInt(text.getText());
+                switch (operatore) {
+                    case "+": a = a + b; break;
+                    case "-": a = a - b; break;
+                    case "×": a = a * b; break;
+                    case "÷": if (b != 0) a = a / b; else { text.setText("Errore"); return; }
+                }
+                text.setText(String.valueOf(a));
+                espressione += " " + b + " =";
+                espressioneF.setText(espressione);
+                nuovaOperazione = true;
+            } else if (comando.equals("C")) {
+                a = 0;
+                b = 0;
+                operatore = "";
+                text.setText("");
+                espressione = "";
+                espressioneF.setText("");
+                nuovaOperazione = true;
+            } else {
+                if (nuovaOperazione) {
+                    text.setText(comando);
+                    nuovaOperazione = false;
+                } else {
+                    text.setText(text.getText() + comando);
+                }
             }
         };
         
-        String[] buttonLabels = {
-                "7", "8", "9", "÷",
-                "4", "5", "6", "×",
-                "1", "2", "3", "-",
-                "0", "C", "=", "+"
-        };
+   
         
-        for (String label : buttonLabels) {
-            JButton button = new JButton(label);
+        JButton[] buttonLabels = {btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, cleanButton, divideButton, forButton, minusButton, plusButton, resultButton};
+        
+        for (JButton button : buttonLabels) {
             button.addActionListener(listener);
-            panel.add(button);
         }
     }
 
@@ -98,6 +90,11 @@ public class Calcolatrice extends JFrame {
 
         btn3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn3.setText("3");
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
 
         btn0.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         btn0.setText("0");
@@ -311,6 +308,10 @@ public class Calcolatrice extends JFrame {
     private void cleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cleanButtonActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn3ActionPerformed
 
     
     public static void main(String args[]) {
