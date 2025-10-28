@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Calcolatrice extends JFrame {
     private double a = 0;
@@ -10,6 +11,7 @@ public class Calcolatrice extends JFrame {
     private String espressione = "";
     private static JTextField text;
     private static JTextField espressioneF;
+    private static ArrayList<JButton> buttons = new ArrayList<>();
 
     public Calcolatrice() {
         initComponents();
@@ -50,6 +52,7 @@ public class Calcolatrice extends JFrame {
                 espressione += " " + b + " =";
                 espressioneF.setText(espressione);
                 nuovaOperazione = true;
+                b = 0;
             } else if (comando.equals("C")) {
                 a = 0;
                 b = 0;
@@ -67,6 +70,10 @@ public class Calcolatrice extends JFrame {
                 }
             }
         };
+
+        for (JButton button : buttons) {
+            button.addActionListener(listener);
+        }
     }
 
     public void initComponents() {
@@ -98,6 +105,7 @@ public class Calcolatrice extends JFrame {
                 button.setBounds(x, y, 90, 70);
                 button.setFont(new java.awt.Font("Segoe UI", 0, 20));
                 x += 95;
+                buttons.add(button);
                 f.add(button);
             }
             x = 5;
