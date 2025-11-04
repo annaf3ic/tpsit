@@ -52,6 +52,7 @@ public class MasterMind extends JFrame {
     public void eListener() {
         ActionListener listener = e -> {
             JButton buttonClicked = ((JButton) e.getSource());
+            JComboBox boxClicked = ((JComboBox) e.getSource());
 
             if (buttonClicked == invio) {
                 int[] risultato = check();
@@ -85,6 +86,10 @@ public class MasterMind extends JFrame {
 
             } else if (buttonClicked == restart) { // reset del gioco
                 resetGame();
+            }
+
+            if (boxClicked == numberOfButtonsBox) {
+                numberOfButtons = buttonClicked.getSelectedItem();
             }
         };
 
@@ -180,6 +185,8 @@ public class MasterMind extends JFrame {
 
         x = 0;
         y = 0;
+        solve s = new solve();
+        
         String[] n1 = {"3", "4", "5", "6", "7", "8", "9", "10"};
         numberOfButtonsBox = new JComboBox<>(n1);
         numberOfButtonsBox.setBounds(x, y, 50, 30);
@@ -191,6 +198,7 @@ public class MasterMind extends JFrame {
         numberOfChancesBox.setBounds(x, y, 50, 30);
         numberOfChancesBox.setFont(new java.awt.Font("Segoe UI", 0, 20));
         f.add(numberOfChancesBox);
+        c1.addItemListener(s);
     }
 
     public static void main(String[] args) {
