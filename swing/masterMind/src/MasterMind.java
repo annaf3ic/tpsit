@@ -8,11 +8,15 @@ public class MasterMind extends JFrame {
     private static String[] colors;
     private static ArrayList<JLabel> labels;
     private ArrayList<String> pattern;
-    private int numberOfButtons = 4;
+    private ArrayList<String> patternIta;
+    private int numberOfButtons;
     private ArrayList<JButton> buttons = new ArrayList<>();
     private JButton invio;
     private JLabel winLabel;
     private JButton restart;
+    private JComboBox numberOfButtonsBox;
+    private int numberOfChances;
+    private JComboBox numberOfChancesBox;
 
     public MasterMind() {
         colors = new String[]{"#B31B1B", "#ED9121", "#FFD700", "#228B22", "#0070BB", "#9966CC"};
@@ -27,7 +31,22 @@ public class MasterMind extends JFrame {
         for (int i=0; i<numberOfButtons; i++) {
             pattern.add(colors[random.nextInt(colors.length)]);
         }
-        System.out.println(pattern); // per debug
+
+        patternIta = new ArrayList<>();
+        for (String s : pattern) patternIta.add(hexToIta(s));
+        System.out.println(patternIta); // per debug
+    }
+
+    private static String hexToIta(String s) {
+        switch (s) {
+            case "#B31B1B": return "ROSSO";
+            case "#ED9121": return "ARANCIONE";
+            case "#FFD700": return "GIALLO";
+            case "#228B22": return "VERDE";
+            case "#0070BB": return "BLU";
+            case "#9966CC": return "VIOLA";
+            default: return "";
+        }
     }
 
     public void eListener() {
@@ -39,6 +58,7 @@ public class MasterMind extends JFrame {
                 labels.get(0).setText("Esatti: " + risultato[0]);
                 labels.get(1).setText("Giusti ma fuori posto: " + risultato[1]);
                 labels.get(2).setText("Errati: " + risultato[2]);
+                System.out.println(risultato);
 
                 if (risultato[0] == 4) {
                     winLabel.setVisible(true);
@@ -86,10 +106,13 @@ public class MasterMind extends JFrame {
 
             if (hexColor.equals(pattern.get(i))) {
                 exactMatches++;
+                System.out.println("Colore inserito (corretto): " + hexToIta(hexColor) + ", posizione inserita (corretta): " + i);
             } else if (pattern.contains(hexColor)) {
                 colorOnlyMatches++;
+                System.out.println("Colore inserito (corretto): " + hexToIta(hexColor) + ", posizione inserita (errata): " + i + ", colore corretto alla posizione " + i + ": " + patternIta.get(i) + ", ultima posizione dove è presente il colore: " + pattern.lastIndexOf(hexColor));
             } else {
                 wrong++;
+                System.out.println("Colore inserito (errato): " + hexToIta(hexColor) + ", posizione inserita: " + i + ", colore corretto alla posizione " + i + ": " + patternIta.get(i));
             }
         }
 
@@ -97,6 +120,7 @@ public class MasterMind extends JFrame {
     }
 
     private void resetGame() {
+
         generatePattern();
         winLabel.setVisible(false);
         invio.setEnabled(true);
@@ -153,6 +177,20 @@ public class MasterMind extends JFrame {
         restart.setBounds(x, y, 200, 40);
         restart.setFont(new java.awt.Font("Segoe UI", 0, 20));
         f.add(restart);
+
+        x = 0;
+        y = 0;
+        String[] n1 = {"3", "4", "5", "6", "7", "8", "9", "10"};
+        numberOfButtonsBox = new JComboBox<>(n1);
+        numberOfButtonsBox.setBounds(x, y, 50, 30);
+        numberOfButtonsBox.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        f.add(numberOfButtonsBox);
+
+        String[] n2 = {"8", "10", "12", "14", "16", "18", "20", "nessun limite"};
+        numberOfChancesBox = new JComboBox<>(n2);
+        numberOfChancesBox.setBounds(x, y, 50, 30);
+        numberOfChancesBox.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        f.add(numberOfChancesBox);
     }
 
     public static void main(String[] args) {
