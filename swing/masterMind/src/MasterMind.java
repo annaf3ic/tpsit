@@ -2,27 +2,69 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MasterMind extends JFrame {
+    JFrame f;
     private static String[] colors;
+    private static ArrayList<String> colorsIta;
     private static ArrayList<JLabel> labels;
     private ArrayList<String> pattern;
     private ArrayList<String> patternIta;
-    private int numberOfButtons;
     private ArrayList<JButton> buttons = new ArrayList<>();
+    private ArrayList<Integer> buttonColorIndex = new ArrayList<>();
     private JButton invio;
     private JLabel winLabel;
     private JButton restart;
     private JComboBox numberOfButtonsBox;
+    private int numberOfButtons;
     private int numberOfChances;
     private JComboBox numberOfChancesBox;
+    private JLabel chancesLeftLabel;
+    private int chancesLeft;
+    private JLabel revealPattern;
 
     public MasterMind() {
         colors = new String[]{"#B31B1B", "#ED9121", "#FFD700", "#228B22", "#0070BB", "#9966CC"};
         initComponents();
         resetGame();
+    }
+
+    private void resetGame() {
+        numberOfButtons = Integer.parseInt((String) numberOfButtonsBox.getSelectedItem());
+        buildButtons();
+
+        String val = (String) numberOfChancesBox.getSelectedItem();
+        numberOfChances = val.equals("nessun limite") ? -1 : Integer.parseInt(val);
+        chancesLeft = numberOfChances;
+
+        generatePattern();
+
+        winLabel.setVisible(false);
+        revealPattern.setVisible(false);
+        invio.setEnabled(true);
+
+        for (JButton b : buttons) {
+            b.setEnabled(true);
+            b.setBackground(Color.decode("#E5E4E2"));
+        }
+
+        labels.get(0).setText("Esatti: ");
+        labels.get(1).setText("Giusti ma fuori posto: ");
+        labels.get(2).setText("Errati: ");
+
+        updateChancesLabel();
+
         eListener();
+    }
+
+    private void updateChancesLabel() {
+        if (numberOfChances == -1) {
+            chancesLeftLabel.setText("Chance rimaste: illimitate");
+        } else {
+            chancesLeftLabel.setText("Chance rimaste: " + chancesLeft);
+        }
     }
 
     private void generatePattern() {
@@ -35,6 +77,9 @@ public class MasterMind extends JFrame {
         patternIta = new ArrayList<>();
         for (String s : pattern) patternIta.add(hexToIta(s));
         System.out.println(patternIta); // per debug
+
+        colorsIta = new ArrayList<String>();
+        for (String s : colors) colorsIta.add(hexToIta(s));
     }
 
     private static String hexToIta(String s) {
@@ -51,52 +96,80 @@ public class MasterMind extends JFrame {
 
     public void eListener() {
         ActionListener listener = e -> {
-            JButton buttonClicked = ((JButton) e.getSource());
-            JComboBox boxClicked = ((JComboBox) e.getSource());
+            Object src = e.getSource();
 
-            if (buttonClicked == invio) {
+            if (src == invio) {
+                //DEBUG
+                System.out.println("Click sul pulsante INVIO");
+
                 int[] risultato = check();
                 labels.get(0).setText("Esatti: " + risultato[0]);
                 labels.get(1).setText("Giusti ma fuori posto: " + risultato[1]);
                 labels.get(2).setText("Errati: " + risultato[2]);
-                System.out.println(risultato);
 
-                if (risultato[0] == 4) {
+                if (risultato[0] == numberOfButtons) {
                     winLabel.setVisible(true);
-
-                    // disattiva i pulsanti di invio e dei colori
                     invio.setEnabled(false);
                     for (JButton b : buttons) b.setEnabled(false);
+                    return;
                 }
 
-            } else if (buttons.contains(buttonClicked)) {
-                Color currentColor = buttonClicked.getBackground();
+                if (numberOfChances != -1) {
+                    chancesLeft--;
+                    updateChancesLabel();
+
+                    if (chancesLeft <= 0) {
+                        winLabel.setText("HAI PERSO!");
+                        revealPattern.setText("Il pattern era: " + String.join(", ", patternIta));
+                        winLabel.setVisible(true);
+                        revealPattern.setVisible(true);
+                        invio.setEnabled(false);
+                        for (JButton b : buttons) b.setEnabled(false);
+                    }
+                }
+                return;
+            }
+
+            if (src instanceof JButton && buttons.contains(src)) {
+                JButton b = (JButton) src;
+
+                //DEBUG
+                int buttonIndex = buttons.indexOf(b);
+                System.out.println("Click sul bottone con indice: " + buttonIndex);
+
+                Color currentColor = b.getBackground();
                 int nextIndex = 0;
 
                 for (int i = 0; i < colors.length; i++) {
-                    Color c = Color.decode(colors[i]);
-                    if (currentColor.equals(c)) {
-                        nextIndex = (i + 1) % colors.length; // se l'indice è maggiore di colors.length ricomincia dall'indice 0
+                    if (currentColor.equals(Color.decode(colors[i]))) {
+                        nextIndex = (i + 1) % colors.length;
                         break;
                     }
                 }
 
-                Color nextColor = Color.decode(colors[nextIndex]);
-                buttonClicked.setBackground(nextColor);
-
-            } else if (buttonClicked == restart) { // reset del gioco
-                resetGame();
+                b.setBackground(Color.decode(colors[nextIndex]));
             }
 
-            if (boxClicked == numberOfButtonsBox) {
-                numberOfButtons = buttonClicked.getSelectedItem();
+
+            if (src == restart || src == numberOfButtonsBox || src == numberOfChancesBox) {
+                //DEBUG
+                if (src == restart) System.out.println("Click sul bottone Restart");
+                else if (src == numberOfButtonsBox) System.out.println("Click su box numero bottoni: valore selezionato: " + numberOfButtonsBox.getSelectedItem());
+                else if (src == numberOfChancesBox) System.out.println("Click su box numero chance: valore selezionato: " + numberOfChancesBox.getSelectedItem());
+
+                resetGame();
             }
         };
 
-        for (JButton button : buttons) {
-            button.addActionListener(listener);
-        }
+        for (JButton b : buttons) b.addActionListener(listener);
+        restart.addActionListener(listener);
+        for (ActionListener al : invio.getActionListeners()) invio.removeActionListener(al);
         invio.addActionListener(listener);
+        for (ActionListener al : numberOfButtonsBox.getActionListeners()) numberOfButtonsBox.removeActionListener(al);
+        numberOfButtonsBox.addActionListener(listener);
+        for (ActionListener al : numberOfChancesBox.getActionListeners()) numberOfChancesBox.removeActionListener(al);
+        numberOfChancesBox.addActionListener(listener);
+        for (ActionListener al : restart.getActionListeners()) restart.removeActionListener(al);
         restart.addActionListener(listener);
     }
 
@@ -124,36 +197,43 @@ public class MasterMind extends JFrame {
         return new int[]{exactMatches, colorOnlyMatches, wrong};
     }
 
-    private void resetGame() {
-
-        generatePattern();
-        winLabel.setVisible(false);
-        invio.setEnabled(true);
-        for (JButton b : buttons) {
-            b.setEnabled(true);
-            b.setBackground(Color.decode("#E5E4E2"));
-        }
-        labels.get(0).setText("Esatti: ");
-        labels.get(1).setText("Giusti ma fuori posto: ");
-        labels.get(2).setText("Errati: ");
-    }
-
     public void initComponents() {
-        JFrame f = new JFrame();
+        f = new JFrame();
         f.setSize(855, 500);
         f.setLayout(null);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
-        int x = 5;
-        int y = 5;
-        for (int i = 0; i < 4; i++) {
-            JButton button = new JButton();
-            button.setBounds(x, y, 200, 200);
-            x += 210;
-            buttons.add(button);
-            f.add(button);
-        }
+        int x;
+        int y;
+
+        x = 300;
+        y = 220;
+        JLabel labelNButtons = new JLabel("Numero di colori da indovinare: ");
+        labelNButtons.setBounds(x, y, 300, 30);
+        labelNButtons.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        f.add(labelNButtons);
+
+        x += 300;
+        String[] n1 = {"3", "4", "5", "6", "7", "8", "9", "10"};
+        numberOfButtonsBox = new JComboBox<>(n1);
+        numberOfButtonsBox.setBounds(x, y, 50, 30);
+        numberOfButtonsBox.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        f.add(numberOfButtonsBox);
+
+        x -= 300;
+        y += 30;
+        JLabel labelNChances = new JLabel("Numero di chance: ");
+        labelNChances.setBounds(x, y, 180, 30);
+        labelNChances.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        f.add(labelNChances);
+
+        x += 180;
+        String[] n2 = {"nessun limite", "8", "10", "12", "14", "16", "18", "20"};
+        numberOfChancesBox = new JComboBox<>(n2);
+        numberOfChancesBox.setBounds(x, y, 150, 30);
+        numberOfChancesBox.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        f.add(numberOfChancesBox);
 
         labels = new ArrayList<>();
         x = 5;
@@ -171,34 +251,52 @@ public class MasterMind extends JFrame {
         invio.setFont(new java.awt.Font("Segoe UI", 0, 20));
         f.add(invio);
 
-        y += 45;
-        winLabel = new JLabel("HAI VINTO!");
-        winLabel.setBounds(x, y, 200, 60);
+        y += 55;
+        winLabel = new JLabel();
+        winLabel.setBounds(x, y, 600, 60);
         winLabel.setFont(new java.awt.Font("Segoe UI", 0, 30));
         f.add(winLabel);
+
+        y += 65;
+        chancesLeftLabel = new JLabel();
+        chancesLeftLabel.setBounds(x, y, 300, 30);
+        chancesLeftLabel.setFont(new java.awt.Font("Segoe UI", 0, 21));
+        f.add(chancesLeftLabel);
+
+        y += 35;
+        revealPattern = new JLabel();
+        revealPattern.setBounds(x, y, 1000, 30);
+        revealPattern.setFont(new java.awt.Font("Segoe UI", 0, 20));
+        f.add(revealPattern);
 
         y += 65;
         restart = new JButton("Ricomincia");
         restart.setBounds(x, y, 200, 40);
         restart.setFont(new java.awt.Font("Segoe UI", 0, 20));
         f.add(restart);
+    }
 
-        x = 0;
-        y = 0;
-        solve s = new solve();
-        
-        String[] n1 = {"3", "4", "5", "6", "7", "8", "9", "10"};
-        numberOfButtonsBox = new JComboBox<>(n1);
-        numberOfButtonsBox.setBounds(x, y, 50, 30);
-        numberOfButtonsBox.setFont(new java.awt.Font("Segoe UI", 0, 20));
-        f.add(numberOfButtonsBox);
+    private void buildButtons() {
+        // Rimuove i bottoni esistenti dal frame
+        for (JButton b : buttons) {
+            b.setVisible(false);
+            for (ActionListener al : b.getActionListeners()) {
+                b.removeActionListener(al);
+            }
+            f.remove(b);
+        }
+        buttons.clear();
 
-        String[] n2 = {"8", "10", "12", "14", "16", "18", "20", "nessun limite"};
-        numberOfChancesBox = new JComboBox<>(n2);
-        numberOfChancesBox.setBounds(x, y, 50, 30);
-        numberOfChancesBox.setFont(new java.awt.Font("Segoe UI", 0, 20));
-        f.add(numberOfChancesBox);
-        c1.addItemListener(s);
+        // Crea nuovi bottoni in base al numero selezionato
+        int x = 5;
+        int y = 5;
+        for (int i = 0; i < numberOfButtons; i++) {
+            JButton button = new JButton();
+            button.setBounds(x, y, 200, 200);
+            x += 210;
+            buttons.add(button);
+            f.add(button);
+        }
     }
 
     public static void main(String[] args) {
